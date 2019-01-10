@@ -1,0 +1,31 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/code
+    docker:
+      - image: pexcn/docker-images:stretch-openwrt
+    environment:
+      OPENWRT_CONFIG_URL_AR71XX_GENERIC: https://raw.githubusercontent.com/openwrt-dev/configs/openwrt-18.06/ar71xx-generic
+      OPENWRT_CONFIG_URL_AR71XX_TINY: https://raw.githubusercontent.com/openwrt-dev/configs/openwrt-18.06/ar71xx-tiny
+      OPENWRT_CONFIG_URL_RAMIPS_MT7620: https://raw.githubusercontent.com/openwrt-dev/configs/openwrt-18.06/ramips-mt7620
+      OPENWRT_CONFIG_URL_X86_64: https://raw.githubusercontent.com/openwrt-dev/configs/openwrt-18.06/x86-64
+    steps:
+      - checkout
+      - run:
+          name: Setup environment variables
+          command: |
+            echo 'export USE_CCACHE=1' >> $BASH_ENV
+            echo 'export CCACHE_DIR="$HOME/code/ccache"' >> $BASH_ENV
+      - restore_cache:
+          key: openwrt-20190110
+      - run:
+          name: Run build
+          command: bash build.sh
+      - save_cache:
+          key: openwrt-20190110
+          paths:
+            - openwrt-dl
+            - ccache
+      - store_artifacts:
+          path: openwrt/bin
+          destination: bin
