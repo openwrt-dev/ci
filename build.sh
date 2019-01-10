@@ -20,21 +20,17 @@ build_firmware() {
   ./scripts/feeds update -a
   ./scripts/feeds install -a
 
-  wget -O .config $OPENWRT_CONFIG_URL_AR71XX_GENERIC
+  curl -kLs $OPENWRT_CONFIG_URL_AR71XX_GENERIC > .config
   make -j4 V=w
-  rm .config
 
-  wget -O .config $OPENWRT_CONFIG_URL_AR71XX_TINY
+  curl -kLs $OPENWRT_CONFIG_URL_AR71XX_TINY > .config
   make -j4 V=w
-  rm .config
 
-  wget -O .config $OPENWRT_CONFIG_URL_RAMIPS_MT7620
+  curl -kLs $OPENWRT_CONFIG_URL_RAMIPS_MT7620 > .config
   make -j4 V=w
-  rm .config
 
-  wget -O .config $OPENWRT_CONFIG_URL_X86_64
+  curl -kLs $OPENWRT_CONFIG_URL_X86_64 > .config
   make -j4 V=w
-  rm .config
 
   popd
 }
