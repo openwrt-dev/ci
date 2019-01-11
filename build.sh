@@ -20,16 +20,7 @@ build_firmware() {
   ./scripts/feeds update -a
   ./scripts/feeds install -a
 
-  curl -kLs $OPENWRT_CONFIG_URL_AR71XX_GENERIC > .config
-  make -j4 V=w
-
-  curl -kLs $OPENWRT_CONFIG_URL_AR71XX_TINY > .config
-  make -j4 V=w
-
-  curl -kLs $OPENWRT_CONFIG_URL_RAMIPS_MT7620 > .config
-  make -j4 V=w
-
-  curl -kLs $OPENWRT_CONFIG_URL_X86_64 > .config
+  curl -kLs $OPENWRT_CONFIG_URL > .config
   make -j4 V=w
 
   popd
