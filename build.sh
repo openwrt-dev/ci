@@ -5,7 +5,7 @@ setup_environment() {
 }
 
 get_sources() {
-  git clone --single-branch -b openwrt-18.06 https://github.com/openwrt-dev/openwrt.git
+  git clone --single-branch -b $OPENWRT_BRANCH https://github.com/openwrt-dev/openwrt.git
 }
 
 restore_cache() {

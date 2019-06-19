@@ -7,6 +7,7 @@ jobs:
       - image: pexcn/docker-images:stretch-openwrt
     environment:
       OPENWRT_CONFIG_URL: https://raw.githubusercontent.com/openwrt-dev/configs/openwrt-18.06/ar71xx-generic
+      OPENWRT_BRANCH: openwrt-18.06
     steps:
       - checkout
       - run:
@@ -37,6 +38,7 @@ jobs:
       - image: pexcn/docker-images:stretch-openwrt
     environment:
       OPENWRT_CONFIG_URL: https://raw.githubusercontent.com/openwrt-dev/configs/openwrt-18.06/ar71xx-tiny
+      OPENWRT_BRANCH: openwrt-18.06
     steps:
       - checkout
       - run:
@@ -67,6 +69,7 @@ jobs:
       - image: pexcn/docker-images:stretch-openwrt
     environment:
       OPENWRT_CONFIG_URL: https://raw.githubusercontent.com/openwrt-dev/configs/openwrt-18.06/ramips-mt7620
+      OPENWRT_BRANCH: openwrt-18.06
     steps:
       - checkout
       - run:
@@ -97,6 +100,7 @@ jobs:
       - image: pexcn/docker-images:stretch-openwrt
     environment:
       OPENWRT_CONFIG_URL: https://raw.githubusercontent.com/openwrt-dev/configs/openwrt-18.06/x86-64
+      OPENWRT_BRANCH: openwrt-18.06
     steps:
       - checkout
       - run:

@@ -7,7 +7,7 @@ API_URL="https://api.github.com/repos/tcnksm/ghr/releases/latest"
 DOWNLOAD_TAG=$(curl -sSL $API_URL | grep "tag_name" | sed -E 's/.*"([^"]+)".*/\1/')
 DOWNLOAD_URL=$(curl -sSL $API_URL | grep "browser_download_url" | grep "linux" | grep "amd64" | cut -d '"' -f 4)
 
-RELEASE_VERSION=$(date +'%Y%m%d')
+RELEASE_VERSION=$OPENWRT_BRANCH-$TARGET-$SUBTARGET
 
 curl -sSL $DOWNLOAD_URL | sudo -E tar -zxf - -C /usr/local/bin/ ghr_${DOWNLOAD_TAG}_linux_amd64/ghr --strip-components 1
 
