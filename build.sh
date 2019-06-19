@@ -20,7 +20,7 @@ build_firmware() {
   ./scripts/feeds update -a
   ./scripts/feeds install -a
 
-  curl -kLs $OPENWRT_CONFIG_URL > .config
+  curl -sSL $OPENWRT_CONFIG_URL > .config
   make -j4 V=w
 
   popd

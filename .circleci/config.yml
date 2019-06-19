@@ -19,6 +19,9 @@ jobs:
       - run:
           name: Run build
           command: bash build.sh
+      - run:
+          name: Deploy to GitHub releases
+          command: bash release.sh
       - save_cache:
           key: openwrt-ar71xx-generic-20190619
           paths:
@@ -46,6 +49,9 @@ jobs:
       - run:
           name: Run build
           command: bash build.sh
+      - run:
+          name: Deploy to GitHub releases
+          command: bash release.sh
       - save_cache:
           key: openwrt-ar71xx-tiny-20190619
           paths:
@@ -73,6 +79,9 @@ jobs:
       - run:
           name: Run build
           command: bash build.sh
+      - run:
+          name: Deploy to GitHub releases
+          command: bash release.sh
       - save_cache:
           key: openwrt-ramips-mt7620-20190619
           paths:
@@ -100,6 +109,9 @@ jobs:
       - run:
           name: Run build
           command: bash build.sh
+      - run:
+          name: Deploy to GitHub releases
+          command: bash release.sh
       - save_cache:
           key: openwrt-x86-64-20190619
           paths:
