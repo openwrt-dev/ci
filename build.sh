@@ -1,17 +1,7 @@
 #!/bin/bash -e
 
-setup_environment() {
-  ccache -M 30G
-}
-
 get_sources() {
   git clone --single-branch -b $OPENWRT_BRANCH https://github.com/openwrt-dev/openwrt.git
-}
-
-restore_cache() {
-  if [ -d "openwrt-dl" ]; then
-    mv openwrt-dl openwrt/dl
-  fi
 }
 
 build_firmware() {
@@ -26,14 +16,5 @@ build_firmware() {
   popd
 }
 
-update_cache() {
-  if [ -d "openwrt/dl" ]; then
-    mv openwrt/dl openwrt-dl
-  fi
-}
-
-setup_environment
 get_sources
-restore_cache
 build_firmware
-update_cache

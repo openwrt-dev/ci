@@ -11,23 +11,11 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Setup environment variables
-          command: |
-            echo 'export USE_CCACHE=1' >> $BASH_ENV
-            echo 'export CCACHE_DIR="$HOME/code/ccache"' >> $BASH_ENV
-      - restore_cache:
-          key: openwrt-ar71xx-generic-20190619
-      - run:
           name: Run build
           command: bash build.sh
       - run:
           name: Deploy to GitHub releases
           command: bash release.sh
-      - save_cache:
-          key: openwrt-ar71xx-generic-20190619
-          paths:
-            - openwrt-dl
-            - ccache
       - store_artifacts:
           path: openwrt/bin
           destination: bin
@@ -42,23 +30,11 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Setup environment variables
-          command: |
-            echo 'export USE_CCACHE=1' >> $BASH_ENV
-            echo 'export CCACHE_DIR="$HOME/code/ccache"' >> $BASH_ENV
-      - restore_cache:
-          key: openwrt-ar71xx-tiny-20190619
-      - run:
           name: Run build
           command: bash build.sh
       - run:
           name: Deploy to GitHub releases
           command: bash release.sh
-      - save_cache:
-          key: openwrt-ar71xx-tiny-20190619
-          paths:
-            - openwrt-dl
-            - ccache
       - store_artifacts:
           path: openwrt/bin
           destination: bin
@@ -73,23 +49,11 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Setup environment variables
-          command: |
-            echo 'export USE_CCACHE=1' >> $BASH_ENV
-            echo 'export CCACHE_DIR="$HOME/code/ccache"' >> $BASH_ENV
-      - restore_cache:
-          key: openwrt-ramips-mt7620-20190619
-      - run:
           name: Run build
           command: bash build.sh
       - run:
           name: Deploy to GitHub releases
           command: bash release.sh
-      - save_cache:
-          key: openwrt-ramips-mt7620-20190619
-          paths:
-            - openwrt-dl
-            - ccache
       - store_artifacts:
           path: openwrt/bin
           destination: bin
@@ -104,23 +68,11 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Setup environment variables
-          command: |
-            echo 'export USE_CCACHE=1' >> $BASH_ENV
-            echo 'export CCACHE_DIR="$HOME/code/ccache"' >> $BASH_ENV
-      - restore_cache:
-          key: openwrt-x86-64-20190619
-      - run:
           name: Run build
           command: bash build.sh
       - run:
           name: Deploy to GitHub releases
           command: bash release.sh
-      - save_cache:
-          key: openwrt-x86-64-20190619
-          paths:
-            - openwrt-dl
-            - ccache
       - store_artifacts:
           path: openwrt/bin
           destination: bin
