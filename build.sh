@@ -5,7 +5,7 @@ get_sources() {
 }
 
 build_firmware() {
-  pushd openwrt
+  cd openwrt
 
   ./scripts/feeds update -a
   ./scripts/feeds install -a
@@ -13,7 +13,7 @@ build_firmware() {
   curl -sSL $OPENWRT_CONFIG_URL > .config
   make -j4 V=w
 
-  popd
+  cd ..
 }
 
 get_sources

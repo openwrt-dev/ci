@@ -2,7 +2,7 @@ version: 2
 
 jobs:
   "ar71xx-generic":
-    working_directory: ~/code
+    working_directory: ~/ci
     docker:
       - image: pexcn/docker-images:stretch-openwrt
     environment:
@@ -14,14 +14,14 @@ jobs:
           name: Run build
           command: bash build.sh
       - run:
-          name: Deploy to GitHub releases
-          command: bash release.sh
+          name: Deploy
+          command: bash deploy.sh
       - store_artifacts:
           path: openwrt/bin
           destination: bin
 
   "ar71xx-tiny":
-    working_directory: ~/code
+    working_directory: ~/ci
     docker:
       - image: pexcn/docker-images:stretch-openwrt
     environment:
@@ -33,14 +33,14 @@ jobs:
           name: Run build
           command: bash build.sh
       - run:
-          name: Deploy to GitHub releases
-          command: bash release.sh
+          name: Deploy
+          command: bash deploy.sh
       - store_artifacts:
           path: openwrt/bin
           destination: bin
 
   "ramips-mt7620":
-    working_directory: ~/code
+    working_directory: ~/ci
     docker:
       - image: pexcn/docker-images:stretch-openwrt
     environment:
@@ -52,14 +52,14 @@ jobs:
           name: Run build
           command: bash build.sh
       - run:
-          name: Deploy to GitHub releases
-          command: bash release.sh
+          name: Deploy
+          command: bash deploy.sh
       - store_artifacts:
           path: openwrt/bin
           destination: bin
 
   "x86-64":
-    working_directory: ~/code
+    working_directory: ~/ci
     docker:
       - image: pexcn/docker-images:stretch-openwrt
     environment:
@@ -71,8 +71,8 @@ jobs:
           name: Run build
           command: bash build.sh
       - run:
-          name: Deploy to GitHub releases
-          command: bash release.sh
+          name: Deploy
+          command: bash deploy.sh
       - store_artifacts:
           path: openwrt/bin
           destination: bin
