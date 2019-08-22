@@ -13,7 +13,12 @@ prepare() {
 
 release() {
   mkdir release
-  cp openwrt/bin/targets/$TARGET/$SUBTARGET/* release/ 2>/dev/null || true
+  cp openwrt/bin/targets/$TARGET/$SUBTARGET/config.seed release/ 2>/dev/null || true
+  cp openwrt/bin/targets/$TARGET/$SUBTARGET/sha256sums release/ 2>/dev/null || true
+  cp openwrt/bin/targets/$TARGET/$SUBTARGET/*factory.bin release/ 2>/dev/null || true
+  cp openwrt/bin/targets/$TARGET/$SUBTARGET/*sysupgrade.bin release/ 2>/dev/null || true
+  # workaround: for x86
+  cp openwrt/bin/targets/$TARGET/$SUBTARGET/*.img.gz release/ 2>/dev/null || true
 }
 
 deploy() {
