@@ -12,10 +12,10 @@ jobs:
       - checkout
       - run:
           name: Run build
-          command: bash build.sh
+          command: ./build.sh
       - run:
           name: Deploy
-          command: bash deploy.sh
+          command: ./deploy.sh
       - store_artifacts:
           path: openwrt/bin
           destination: bin
@@ -31,10 +31,10 @@ jobs:
       - checkout
       - run:
           name: Run build
-          command: bash build.sh
+          command: ./build.sh
       - run:
           name: Deploy
-          command: bash deploy.sh
+          command: ./deploy.sh
       - store_artifacts:
           path: openwrt/bin
           destination: bin
@@ -50,10 +50,10 @@ jobs:
       - checkout
       - run:
           name: Run build
-          command: bash build.sh
+          command: ./build.sh
       - run:
           name: Deploy
-          command: bash deploy.sh
+          command: ./deploy.sh
       - store_artifacts:
           path: openwrt/bin
           destination: bin
@@ -69,10 +69,10 @@ jobs:
       - checkout
       - run:
           name: Run build
-          command: bash build.sh
+          command: ./build.sh
       - run:
           name: Deploy
-          command: bash deploy.sh
+          command: ./deploy.sh
       - store_artifacts:
           path: openwrt/bin
           destination: bin
