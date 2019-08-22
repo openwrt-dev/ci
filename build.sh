@@ -11,7 +11,7 @@ build_firmware() {
   ./scripts/feeds install -a
 
   curl -sSL $OPENWRT_CONFIG_URL -o .config
-  make -j$(nproc) V=w
+  make -j4 V=w
 
   cd ..
 }
