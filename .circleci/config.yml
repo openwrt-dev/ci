@@ -20,12 +20,12 @@ jobs:
           path: openwrt/bin
           destination: bin
 
-  "ar71xx-tiny":
+  "ath79-tiny":
     working_directory: ~/ci
     docker:
       - image: pexcn/docker-images:stretch-openwrt
     environment:
-      OPENWRT_CONFIG_URL: https://raw.githubusercontent.com/openwrt-dev/configs/openwrt-19.07/ar71xx-tiny
+      OPENWRT_CONFIG_URL: https://raw.githubusercontent.com/openwrt-dev/configs/openwrt-19.07/ath79-tiny
       OPENWRT_BRANCH: openwrt-19.07
     steps:
       - checkout
@@ -82,6 +82,6 @@ workflows:
   build:
     jobs:
       - "ar71xx-generic"
-      - "ar71xx-tiny"
+      - "ath79-tiny"
       - "ramips-mt7620"
       - "x86-64"
