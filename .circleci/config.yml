@@ -1,12 +1,12 @@
 version: 2
 
 jobs:
-  "ar71xx-generic":
+  "ath79-generic":
     working_directory: ~/ci
     docker:
       - image: pexcn/docker-images:stretch-openwrt
     environment:
-      OPENWRT_CONFIG_URL: https://raw.githubusercontent.com/openwrt-dev/configs/openwrt-19.07/ar71xx-generic
+      OPENWRT_CONFIG_URL: https://raw.githubusercontent.com/openwrt-dev/configs/openwrt-19.07/ath79-generic
       OPENWRT_BRANCH: openwrt-19.07
     steps:
       - checkout
@@ -81,7 +81,7 @@ workflows:
   version: 2
   build:
     jobs:
-      - "ar71xx-generic"
+      - "ath79-generic"
       - "ath79-tiny"
       - "ramips-mt7620"
       - "x86-64"
