@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 get_sources() {
-  git clone --single-branch -b $OPENWRT_BRANCH https://github.com/openwrt-dev/openwrt.git
+  git clone https://github.com/openwrt-dev/openwrt.git --single-branch -b $(echo $CONFIG_URL | awk -F '/' '{print $(NF-1)}')
 }
 
 build_firmware() {
@@ -10,8 +10,8 @@ build_firmware() {
   ./scripts/feeds update -a
   ./scripts/feeds install -a
 
-  curl -sSL $OPENWRT_CONFIG_URL -o .config
-  make -j4 V=w
+  wget $CONFIG_URL -O .config
+  [ "$VERBOSE_LOG" != 1 ] && make -j4 V=w || make -j1 V=sc
 
   cd ..
 }

@@ -1,3 +1,3 @@
 # OpenWrt CI
 
-[![CircleCI](https://circleci.com/gh/openwrt-dev/ci/tree/openwrt-19.07.svg?style=svg)](https://circleci.com/gh/openwrt-dev/ci/tree/openwrt-19.07)
+[![Build](https://github.com/openwrt-dev/ci/workflows/Build/badge.svg)](https://github.com/openwrt-dev/ci/actions)
