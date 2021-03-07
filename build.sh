@@ -11,7 +11,7 @@ build_firmware() {
   ./scripts/feeds install -a
 
   wget $CONFIG_URL -O .config
-  [ "$VERBOSE_LOG" != 1 ] && make -j4 V=w || make -j1 V=sc
+  [ "$VERBOSE_LOG" != 1 ] && make -j$(nproc) V=w || make -j1 V=sc
 
   cd ..
 }
