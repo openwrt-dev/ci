@@ -2,6 +2,8 @@ name: Build
 
 on:
   push:
+    branches:
+      - openwrt-*
   workflow_dispatch:
     inputs:
       verbose_log:
