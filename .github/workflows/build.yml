@@ -34,6 +34,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Enable build cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.ccache
+            openwrt/dl
+          key: ${{ runner.os }}-openwrt-${{ matrix.ARCH }}-${{ github.sha }}
+          restore-keys: ${{ runner.os }}-openwrt-${{ matrix.ARCH }}-
+
       - name: Run build
         run: |
           ./build.sh
