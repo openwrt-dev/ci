@@ -20,7 +20,7 @@ jobs:
     env:
       TZ: Asia/Taipei
       VERBOSE_LOG: ${{ github.event.inputs.verbose_log }}
-      CONFIG_URL: https://raw.githubusercontent.com/${{ github.repository }}/openwrt-19.07/${{ matrix.ARCH }}
+      CONFIG_URL: https://raw.githubusercontent.com/openwrt-dev/configs/openwrt-19.07/${{ matrix.ARCH }}
     strategy:
       fail-fast: false
       matrix:
@@ -33,6 +33,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Enable build cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.ccache
+          key: ${{ runner.os }}-openwrt-${{ matrix.ARCH }}-${{ github.sha }}
+          restore-keys: ${{ runner.os }}-openwrt-${{ matrix.ARCH }}-
 
       - name: Run build
         run: |
