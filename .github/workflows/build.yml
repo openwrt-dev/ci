@@ -2,15 +2,14 @@ name: Build
 
 on:
   push:
+    branches:
+      - openwrt-*
   workflow_dispatch:
     inputs:
       verbose_log:
         description: 'Whether to enable verbose build log'
         required: true
         default: '0'
-
-env:
-  TZ: Asia/Taipei
 
 jobs:
   build:
@@ -19,8 +18,9 @@ jobs:
       image: pexcn/docker-images:buster-openwrt
       #options: --user builder
     env:
-      CONFIG_URL: https://raw.githubusercontent.com/openwrt-dev/configs/openwrt-19.07/${{ matrix.ARCH }}
+      TZ: Asia/Taipei
       VERBOSE_LOG: ${{ github.event.inputs.verbose_log }}
+      CONFIG_URL: https://raw.githubusercontent.com/${{ github.repository }}/openwrt-19.07/${{ matrix.ARCH }}
     strategy:
       fail-fast: false
       matrix:
@@ -29,11 +29,27 @@ jobs:
           - ath79-tiny
           - ramips-mt7620
           - x86-64
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
       - name: Run build
-        run: ./build.sh $VERBOSE_LOG
+        run: |
+          ./build.sh
+          ./tarball.sh
+
+      # will be replaced with one of the:
+      #   https://github.com/softprops/action-gh-release
+      #   https://github.com/github-release/github-release
+      - name: Upload to Releases
+        uses: ncipollo/release-action@v1
+        with:
+          tag: openwrt-19.07
+          allowUpdates: true
+          artifacts: ${{ matrix.ARCH }}.tar.gz
+          token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Upload to Artifact
         uses: actions/upload-artifact@v2
         with:
