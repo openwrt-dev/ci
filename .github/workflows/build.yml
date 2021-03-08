@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - openwrt-*
+      - ci-*
   workflow_dispatch:
     inputs:
       verbose_log:
