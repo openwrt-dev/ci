@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 get_sources() {
-  git clone https://github.com/openwrt-dev/openwrt.git --single-branch -b $(echo $CONFIG_URL | awk -F '/' '{print $(NF-1)}')
+  git clone https://github.com/openwrt-dev/openwrt.git --single-branch -b ${GITHUB_REF##*/}
 }
 
 build_firmware() {
