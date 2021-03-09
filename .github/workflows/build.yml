@@ -16,7 +16,6 @@ jobs:
     runs-on: ubuntu-20.04
     container:
       image: pexcn/docker-images:buster-openwrt
-      #options: --user builder
     env:
       TZ: Asia/Taipei
       VERBOSE_LOG: ${{ github.event.inputs.verbose_log }}
@@ -29,7 +28,6 @@ jobs:
           - ath79-tiny
           - ramips-mt7620
           - x86-64
-
     steps:
       - name: Checkout
         uses: actions/checkout@v2

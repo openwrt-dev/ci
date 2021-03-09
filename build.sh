@@ -1,5 +1,7 @@
 #!/bin/bash -e
 
+[ "$VERBOSE_LOG" == 1 ] && set -x
+
 get_sources() {
   git clone https://github.com/openwrt-dev/openwrt.git --single-branch -b ${GITHUB_REF##*/}
 }
