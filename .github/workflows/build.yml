@@ -35,9 +35,7 @@ jobs:
       - name: Enable build cache
         uses: actions/cache@v2
         with:
-          path: |
-            ~/.ccache
-            openwrt-dl
+          path: ~/.ccache
           key: ${{ runner.os }}-openwrt-${{ matrix.ARCH }}-${{ github.sha }}
           restore-keys: ${{ runner.os }}-openwrt-${{ matrix.ARCH }}-
 

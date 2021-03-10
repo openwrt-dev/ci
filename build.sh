@@ -18,19 +18,5 @@ build_firmware() {
   cd ..
 }
 
-restore_cache() {
-  if [ -d "openwrt-dl" ]; then
-    mv -v openwrt-dl openwrt/dl
-  fi
-}
-
-update_cache() {
-  if [ -d "openwrt/dl" ]; then
-    mv -v openwrt/dl openwrt-dl
-  fi
-}
-
 get_sources
-restore_cache
 build_firmware
-update_cache
