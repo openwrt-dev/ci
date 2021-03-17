@@ -48,6 +48,7 @@ jobs:
       #   https://github.com/softprops/action-gh-release
       #   https://github.com/github-release/github-release
       - name: Upload to Releases
+        if: github.event_name == 'push'
         uses: ncipollo/release-action@v1
         with:
           tag: openwrt-19.07
