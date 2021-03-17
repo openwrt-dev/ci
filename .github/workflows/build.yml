@@ -19,7 +19,7 @@ jobs:
     env:
       TZ: Asia/Taipei
       VERBOSE_LOG: ${{ github.event.inputs.verbose_log }}
-      CONFIG_URL: https://raw.githubusercontent.com/openwrt-dev/configs/openwrt-19.07/${{ matrix.ARCH }}
+      BUILD_ARCH: ${{ matrix.ARCH }}
     strategy:
       fail-fast: false
       matrix:
@@ -31,6 +31,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          submodules: true
 
       - name: Enable build cache
         uses: actions/cache@v2

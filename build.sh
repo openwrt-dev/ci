@@ -1,4 +1,5 @@
 #!/bin/bash -e
+set -o pipefail
 
 [ "$VERBOSE_LOG" == 1 ] && set -x
 
@@ -12,7 +13,7 @@ build_firmware() {
   ./scripts/feeds update -a
   ./scripts/feeds install -a
 
-  wget $CONFIG_URL -O .config
+  cp ../config/$BUILD_ARCH .config
   [ "$VERBOSE_LOG" != 1 ] && make -j$(nproc) V=w || make -j1 V=sc
 
   cd ..
