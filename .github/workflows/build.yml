@@ -34,12 +34,15 @@ jobs:
         with:
           submodules: true
 
-      - name: Enable build cache
-        uses: actions/cache@v2
-        with:
-          path: ~/.ccache
-          key: ${{ runner.os }}-openwrt-${{ matrix.ARCH }}-${{ github.sha }}
-          restore-keys: ${{ runner.os }}-openwrt-${{ matrix.ARCH }}-
+      #
+      # github actions disk spaces not enough, disable build cache temporarily
+      #
+      #- name: Enable build cache
+      #  uses: actions/cache@v2
+      #  with:
+      #    path: ~/.ccache
+      #    key: ${{ runner.os }}-openwrt-${{ matrix.ARCH }}-${{ github.sha }}
+      #    restore-keys: ${{ runner.os }}-openwrt-${{ matrix.ARCH }}-
 
       - name: Run build
         run: |
