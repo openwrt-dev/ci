@@ -13,7 +13,7 @@ build_firmware() {
   ./scripts/feeds update -a
   ./scripts/feeds install -a
 
-  cp ../config/$BUILD_ARCH .config
+  cp ../configs/$BUILD_ARCH .config
   [ "$VERBOSE_LOG" != 1 ] && make -j$(nproc) V=w || make -j1 V=sc
 
   cd ..
