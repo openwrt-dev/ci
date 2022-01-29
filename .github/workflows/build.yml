@@ -49,6 +49,9 @@ jobs:
           ./build.sh
           ./tarball.sh
 
+      - name: Set environment variable
+        run: echo "CURRENT_BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
+
       # will be replaced with one of the:
       #   https://github.com/softprops/action-gh-release
       #   https://github.com/github-release/github-release
@@ -56,7 +59,7 @@ jobs:
         if: github.event_name == 'push'
         uses: ncipollo/release-action@v1
         with:
-          tag: openwrt-21.02
+          tag: ${{ env.CURRENT_BRANCH }}
           allowUpdates: true
           artifacts: ${{ matrix.ARCH }}.tar.gz
           token: ${{ secrets.GITHUB_TOKEN }}
