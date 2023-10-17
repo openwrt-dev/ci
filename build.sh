@@ -14,7 +14,7 @@ build_firmware() {
   ./scripts/feeds install -a
 
   cp ${GITHUB_WORKSPACE}/configs/${BUILD_PROFILE} .config
-  make -j$(nproc) V=w || make -j1 V=sc
+  make -j$(nproc) V=w || make -j1 V=sc || exit 1
 
   cd -
 }
