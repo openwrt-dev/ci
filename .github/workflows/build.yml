@@ -30,6 +30,7 @@ jobs:
         PROFILE:
           - ath79-generic
           - ath79-tiny
+          - ipq40xx-generic
 
     steps:
       - name: Maximize build space
