@@ -15,11 +15,15 @@ jobs:
     container:
       image: pexcn/docker-images:bookworm-openwrt
       volumes:
-        - /usr/local/lib/android:/usr/local/lib/android
+        - /usr/local:/usr/local
+        - /usr/lib/google-cloud-sdk:/usr/lib/google-cloud-sdk
         - /usr/share/dotnet:/usr/share/dotnet
-        - /opt/ghc:/opt/ghc
-        - /opt/hostedtoolcache/CodeQL:/opt/hostedtoolcache/CodeQL
-        - /var/run/docker.sock:/var/run/docker.sock
+        - /usr/share/swift:/usr/share/swift
+        - /opt/az:/opt/az
+        - /opt/google:/opt/google
+        - /opt/microsoft:/opt/microsoft
+        - /opt/pipx:/opt/pipx
+        - /opt/hostedtoolcache:/opt/hostedtoolcache
     env:
       TZ: Asia/Taipei
       BUILD_DIR: openwrt
@@ -33,23 +37,10 @@ jobs:
           - ipq40xx-generic
 
     steps:
-      - name: Maximize build space
-        run: |
-          # remove unnecessary software
-          sudo find /usr/local/lib/android -mindepth 1 -delete
-          sudo find /usr/share/dotnet -mindepth 1 -delete
-          sudo find /opt/ghc -mindepth 1 -delete
-          sudo find /opt/hostedtoolcache/CodeQL -mindepth 1 -delete
-          # remove docker images
-          download_docker_binary() {
-            local docker_version="24.0.6"
-            local arch="x86_64"
-            [ "$(dpkg --print-architecture)" = "amd64" ] || arch="aarch64"
-            curl https://download.docker.com/linux/static/stable/${arch}/docker-${docker_version}.tgz | \
-              sudo tar zxv -C /usr/local/bin/ docker/docker --strip-components 1
-          }
-          download_docker_binary
-          sudo docker image prune -af
+      - name: Maximize disk space
+        uses: pexcn/maximize-disk-space@v1.0.3
+        with:
+          use-system-docker: false
 
       - name: Checkout sources
         uses: actions/checkout@v3
@@ -59,8 +50,7 @@ jobs:
       - name: Make build cache
         uses: actions/cache@v3
         with:
-          path: |
-            /builder/.ccache
+          path: /builder/.ccache
           key: ${{ runner.os }}-${{ github.ref_name }}-${{ env.BUILD_PROFILE }}-${{ github.sha }}
           restore-keys: ${{ runner.os }}-${{ github.ref_name }}-${{ env.BUILD_PROFILE }}-
 
