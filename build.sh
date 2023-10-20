@@ -2,9 +2,15 @@
 # shellcheck disable=SC3043,SC2086,SC2164,SC2103,SC2046
 
 get_sources() {
-  local repo_url="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY_OWNER}/openwrt.git"
-  local branch="$GITHUB_REF_NAME"
-  git clone $repo_url --single-branch -b $branch $BUILD_DIR
+  git clone $BUILD_REPO --single-branch -b $GITHUB_REF_NAME $BUILD_DIR
+}
+
+echo_version() {
+  echo "[=============== openwrt version ===============]"
+  cd $BUILD_DIR && git log -1 && cd -
+  echo
+  echo "[=============== configs version ===============]"
+  cd configs && git log -1 && cd -
 }
 
 build_firmware() {
@@ -26,5 +32,6 @@ package_binaries() {
 }
 
 get_sources
+echo_version
 build_firmware
 package_binaries

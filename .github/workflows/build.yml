@@ -26,6 +26,7 @@ jobs:
         - /opt/hostedtoolcache:/opt/hostedtoolcache
     env:
       TZ: Asia/Taipei
+      BUILD_REPO: https://github.com/openwrt-dev/openwrt.git
       BUILD_DIR: openwrt
       BUILD_PROFILE: ${{ matrix.PROFILE }}
     strategy:
@@ -38,7 +39,7 @@ jobs:
 
     steps:
       - name: Maximize disk space
-        uses: pexcn/maximize-disk-space@v1.0.3
+        uses: pexcn/maximize-disk-space@v1
         with:
           use-system-docker: false
 
@@ -56,14 +57,6 @@ jobs:
 
       - name: Build firmware
         run: ./build.sh
-
-      - name: Show OpenWrt Version
-        run: |
-          echo "=============== Configs Version ==============="
-          cd configs && git log -1 && cd -
-          echo
-          echo "=============== OpenWrt Version ==============="
-          cd $BUILD_DIR && git log -1 && cd -
 
       - name: Upload to Artifact
         uses: actions/upload-artifact@v3
