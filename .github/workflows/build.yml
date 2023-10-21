@@ -32,6 +32,8 @@ jobs:
       fail-fast: false
       matrix:
         PROFILE:
+          - ar71xx-generic
+          - ar71xx-tiny
           - ath79-generic
           - ath79-tiny
           - ramips-mt7620
