@@ -2,19 +2,19 @@
 # shellcheck disable=SC3043,SC2086,SC2164,SC2103,SC2046
 
 get_sources() {
-  git clone $BUILD_REPO --single-branch -b $GITHUB_REF_NAME $BUILD_DIR
+  git clone $BUILD_REPO --single-branch -b $GITHUB_REF_NAME openwrt
 }
 
 echo_version() {
   echo "[=============== openwrt version ===============]"
-  cd $BUILD_DIR && git log -1 && cd -
+  cd openwrt && git log -1 && cd -
   echo
   echo "[=============== configs version ===============]"
   cd configs && git log -1 && cd -
 }
 
 build_firmware() {
-  cd $BUILD_DIR
+  cd openwrt
 
   ./scripts/feeds update -a
   ./scripts/feeds install -a
@@ -26,7 +26,7 @@ build_firmware() {
 }
 
 package_binaries() {
-  local bin_dir="${BUILD_DIR}/bin"
+  local bin_dir="openwrt/bin"
   local tarball="${BUILD_PROFILE}.tar.gz"
   tar -zcvf $tarball -C $bin_dir $(ls $bin_dir -1)
 }

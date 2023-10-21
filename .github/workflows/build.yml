@@ -27,7 +27,6 @@ jobs:
     env:
       TZ: Asia/Taipei
       BUILD_REPO: https://github.com/openwrt-dev/openwrt.git
-      BUILD_DIR: openwrt
       BUILD_PROFILE: ${{ matrix.PROFILE }}
     strategy:
       fail-fast: false
@@ -62,7 +61,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ${{ env.BUILD_PROFILE }}
-          path: ${{ env.BUILD_DIR }}/bin
+          path: openwrt/bin
 
       - name: Upload to Releases
         if: (github.event_name == 'push' && startsWith(github.event.head_commit.message, '[release] ')) || (github.event.inputs.upload_release == 1)
