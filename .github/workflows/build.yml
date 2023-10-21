@@ -2,67 +2,71 @@ name: Build
 
 on:
   push:
-    branches:
-      - openwrt-*
   workflow_dispatch:
     inputs:
-      verbose_log:
-        description: 'Whether to enable verbose build log'
+      upload_release:
+        description: 'Whether to upload binaries to releases'
         required: true
         default: '0'
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     container:
       image: pexcn/docker-images:buster-openwrt
+      volumes:
+        - /usr/local:/usr/local
+        - /usr/lib/google-cloud-sdk:/usr/lib/google-cloud-sdk
+        - /usr/share/dotnet:/usr/share/dotnet
+        - /usr/share/swift:/usr/share/swift
+        - /opt/az:/opt/az
+        - /opt/google:/opt/google
+        - /opt/microsoft:/opt/microsoft
+        - /opt/pipx:/opt/pipx
+        - /opt/hostedtoolcache:/opt/hostedtoolcache
     env:
       TZ: Asia/Taipei
-      VERBOSE_LOG: ${{ github.event.inputs.verbose_log }}
-      BUILD_ARCH: ${{ matrix.ARCH }}
+      BUILD_REPO: https://github.com/openwrt-dev/openwrt.git
+      BUILD_PROFILE: ${{ matrix.PROFILE }}
     strategy:
       fail-fast: false
       matrix:
-        ARCH:
+        PROFILE:
           - ath79-generic
           - ath79-tiny
           - ramips-mt7620
           - x86-64
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - name: Maximize disk space
+        uses: pexcn/maximize-disk-space@v1
+        with:
+          use-system-docker: false
+
+      - name: Checkout sources
+        uses: actions/checkout@v3
         with:
           submodules: true
 
-      #
-      # github actions disk spaces not enough, disable build cache temporarily
-      #
-      #- name: Enable build cache
-      #  uses: actions/cache@v2
-      #  with:
-      #    path: ~/.ccache
-      #    key: ${{ runner.os }}-openwrt-${{ matrix.ARCH }}-${{ github.sha }}
-      #    restore-keys: ${{ runner.os }}-openwrt-${{ matrix.ARCH }}-
-
-      - name: Run build
-        run: |
-          ./build.sh
-          ./tarball.sh
-
-      # will be replaced with one of the:
-      #   https://github.com/softprops/action-gh-release
-      #   https://github.com/github-release/github-release
-      - name: Upload to Releases
-        if: github.event_name == 'push'
-        uses: ncipollo/release-action@v1
+      - name: Make build cache
+        uses: actions/cache@v3
         with:
-          tag: openwrt-19.07
-          allowUpdates: true
-          artifacts: ${{ matrix.ARCH }}.tar.gz
-          token: ${{ secrets.GITHUB_TOKEN }}
+          path: /builder/.ccache
+          key: ${{ runner.os }}-${{ github.ref_name }}-${{ env.BUILD_PROFILE }}-${{ github.sha }}
+          restore-keys: ${{ runner.os }}-${{ github.ref_name }}-${{ env.BUILD_PROFILE }}-
+
+      - name: Build firmware
+        run: ./build.sh
 
       - name: Upload to Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
-          name: ${{ matrix.ARCH }}
+          name: ${{ env.BUILD_PROFILE }}
           path: openwrt/bin
+
+      - name: Upload to Releases
+        if: (github.event_name == 'push' && startsWith(github.event.head_commit.message, '[release] ')) || (github.event.inputs.upload_release == 1)
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.ref_name }}
+          files: ${{ env.BUILD_PROFILE }}.tar.gz
